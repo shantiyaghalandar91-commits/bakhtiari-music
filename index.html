@@ -1,0 +1,65 @@
+
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>موسیقی بختیاری | آهنگ‌های لری بختیاری</title>
+<meta name="description" content="موسیقی بختیاری؛ مرجع معرفی و پخش آهنگ‌های لری بختیاری، خوانندگان و آثار موسیقی بختیاری.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="/">
+<style>
+:root{--bg:#061217;--panel:#0b1c23;--gold:#f2bb55;--muted:#a9b5b8;--line:#20343b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#fff;font-family:Tahoma,Arial,sans-serif}
+a{color:inherit;text-decoration:none}.top{position:sticky;top:0;z-index:5;background:#061217ee;backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:64px;max-width:620px;margin:auto;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+.logo{font-weight:900;color:var(--gold);font-size:20px}.sub{display:block;font-size:9px;color:#fff;text-align:center;font-weight:400;margin-top:3px}
+.icon{font-size:24px;color:#fff}.hero{max-width:620px;margin:auto;padding:18px 14px 10px}
+.heroimg{height:330px;border-radius:24px;background:linear-gradient(0deg,#061217 2%,transparent 60%),url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80") center/cover;display:flex;align-items:end;padding:24px 20px}
+h1{font-size:34px;margin:0 0 6px}.tag{color:#ddd}.btn{display:inline-block;background:var(--gold);color:#17120a;font-weight:bold;padding:13px 22px;border-radius:30px;margin-top:15px}
+main{max-width:620px;margin:auto;padding:10px 14px 100px}.section{margin-top:26px}.head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}h2{font-size:20px;margin:0}.gold{color:var(--gold)}
+.search{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:13px 15px;color:#aaa;width:100%;outline:none}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden}.cover{height:135px;background:linear-gradient(135deg,#234,#071216);display:flex;align-items:end;padding:10px}.cardbody{padding:11px}.name{font-weight:bold}.meta{font-size:11px;color:var(--muted);margin-top:5px}
+.play{width:40px;height:40px;border-radius:50%;border:0;background:var(--gold);font-size:17px;margin-right:auto;cursor:pointer}
+audio{width:100%;height:34px;margin-top:10px}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:10px}.cat{padding:22px 14px;background:var(--panel);border:1px solid var(--line);border-radius:15px}.cat b{display:block;margin-bottom:5px}.cat span{font-size:11px;color:var(--muted)}
+.upload{margin-top:28px;text-align:center;border:1px dashed #80652f;padding:22px;border-radius:18px;background:#0a181d}.upload input{max-width:100%;margin:12px 0}.upload button{background:var(--gold);border:0;border-radius:24px;padding:11px 20px;font-weight:bold}
+.flash{background:#17291e;border:1px solid #31573a;padding:12px;border-radius:12px;margin-bottom:15px;color:#cce9d1}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#07161bee;backdrop-filter:blur(15px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:10px 6px 9px;z-index:6}.bottom a{text-align:center;color:#98a5a8;font-size:10px}.bottom a:first-child{color:var(--gold)}.bottom i{display:block;font-style:normal;font-size:20px;margin-bottom:3px}
+footer{color:#68777b;text-align:center;font-size:11px;padding:25px 10px}
+@media(min-width:700px){.nav,main,.hero{max-width:760px}.cards{grid-template-columns:repeat(3,1fr)}.heroimg{height:390px}}
+</style>
+</head>
+<body>
+<header class="top"><nav class="nav"><span class="icon">⌕</span><div class="logo">موسیقی بختیاری<span class="sub">آواز دل ایل، صدای سرزمین</span></div><span class="icon">☰</span></nav></header>
+
+<section class="hero"><div class="heroimg"><div><h1>موسیقی بختیاری</h1><div class="tag">آواز دل ایل، صدای سرزمین</div><a class="btn" href="#songs">▶ مشاهده آهنگ‌ها</a></div></div></section>
+
+<main>
+{% with messages=get_flashed_messages() %}{% if messages %}<div class="flash">{{messages[0]}}</div>{% endif %}{% endwith %}
+
+<section class="section"><input class="search" id="search" placeholder="نام آهنگ یا خواننده را جستجو کنید..." oninput="filterSongs()"></section>
+
+<section class="section" id="songs"><div class="head"><h2>🎵 جدیدترین آهنگ‌ها</h2><span class="gold">همه</span></div>
+<div class="cards" id="songlist">
+{% for s in songs %}
+<article class="card song" data-name="{{title(s)|lower}}">
+<div class="cover"><button class="play" onclick="this.closest('.card').querySelector('audio').play()">▶</button></div>
+<div class="cardbody"><div class="name">{{title(s)}}</div><div class="meta">موسیقی لری بختیاری</div><audio controls preload="none"><source src="{{url_for('song',name=s)}}"></audio></div>
+</article>
+{% else %}<p>هنوز آهنگی اضافه نشده است.</p>{% endfor %}
+</div></section>
+
+<section class="section"><div class="head"><h2>دسته‌بندی‌ها</h2><span class="gold">▦</span></div>
+<div class="cats"><div class="cat">🎤 <b>خوانندگان بختیاری</b><span>معرفی خوانندگان</span></div><div class="cat">🔥 <b>آهنگ‌های محلی</b><span>آوازهای محلی بختیاری</span></div><div class="cat">🎻 <b>آهنگ‌های سنتی</b><span>آثار سنتی و قدیمی</span></div><div class="cat">♥ <b>آهنگ‌های عاشقانه</b><span>منتخب‌های عاشقانه</span></div></div></section>
+
+<section class="upload"><h2>افزودن آهنگ</h2><p class="meta">برای مدیریت اولیه سایت، فایل صوتی را انتخاب کنید.</p>
+<form action="/upload" method="post" enctype="multipart/form-data"><input type="file" name="song" accept=".mp3,.wav,.m4a,.ogg" required><br><button>آپلود آهنگ</button></form></section>
+
+<footer>© 2026 موسیقی بختیاری — همه حقوق محفوظ است.</footer>
+</main>
+
+<nav class="bottom"><a href="/"><i>⌂</i>خانه</a><a href="#search"><i>⌕</i>جستجو</a><a href="#songs"><i>♡</i>علاقه‌مندی‌ها</a><a href="#menu"><i>♙</i>پروفایل</a></nav>
+<script>
+function filterSongs(){let q=document.getElementById('search').value.toLowerCase();document.querySelectorAll('.song').forEach(x=>x.style.display=x.dataset.name.includes(q)?'block':'none')}
+</script>
+</body></html>
